@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melodie Peng Process Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&display=swap">
+<style>
+/* Layout idea: each project reads like a process traveler. Left rail = run metadata, right = method, results, next experiment. */
+:root{
+  --bg:#f6f7f8; --paper:#ffffff; --ink:#15191e; --ink-2:#4a535d; --rule:#d9dde2;
+  --accent:#1f5f99; --accent-soft:#e6eef6; --s1:#2a78d6; --s2:#eb6834; --warn:#b4570a; --warn-soft:#fbefe2;
+  --display:Calibri, Carlito, "Segoe UI", sans-serif; --body:Calibri, Carlito, "Segoe UI", sans-serif; --mono:Calibri, Carlito, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121518; --paper:#1a1e22; --ink:#eceef0; --ink-2:#a9b1ba; --rule:#2e353c;
+  --accent:#7fb3e6; --accent-soft:#1e2c3a; --s1:#3987e5; --s2:#d95926; --warn:#f0a25a; --warn-soft:#3a2a1a; color-scheme:dark; }}
+:root[data-theme="dark"]{
+  --bg:#121518; --paper:#1a1e22; --ink:#eceef0; --ink-2:#a9b1ba; --rule:#2e353c;
+  --accent:#7fb3e6; --accent-soft:#1e2c3a; --s1:#3987e5; --s2:#d95926; --warn:#f0a25a; --warn-soft:#3a2a1a; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body);font-variant-numeric:tabular-nums}
+.wrap{max-width:1040px;margin:0 auto;padding:40px 20px 80px}
+header{display:grid;gap:12px;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+h1{font:700 2.6rem/1.1 var(--display);margin:0;text-wrap:balance}
+.sub{color:var(--ink-2);margin:0;max-width:68ch}
+.meta{font:500 .82rem var(--mono);color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta a{color:var(--accent)}
+h2{font:700 1.6rem/1.2 var(--display);margin:0;text-wrap:balance}
+h3{font:600 .78rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 6px}
+p{margin:0 0 12px;max-width:68ch}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:28px 0 8px}
+.tools div{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
+.tools ul{margin:0;padding-left:18px;font-size:.92rem}
+.trav{background:var(--paper);border:1px solid var(--rule);border-radius:8px;margin-top:36px;display:grid;grid-template-columns:230px 1fr}
+.rail{border-right:1px solid var(--rule);padding:22px 18px;font:400 .8rem/1.5 var(--mono);color:var(--ink-2);display:grid;align-content:start;gap:12px}
+.rail b{display:block;color:var(--ink);font-weight:500}
+.lot{font:500 .95rem var(--mono);color:var(--accent)}
+.body{padding:22px 26px;display:grid;gap:18px;min-width:0}
+.findings{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:f}
+.findings li{counter-increment:f;display:grid;grid-template-columns:28px 1fr;gap:6px;max-width:72ch}
+.findings li::before{content:counter(f);font:500 .8rem var(--mono);color:var(--paper);background:var(--accent);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;margin-top:2px}
+.stats{display:flex;flex-wrap:wrap;gap:10px}
+.stat{border:1px solid var(--rule);border-radius:6px;padding:8px 12px;min-width:150px}
+.stat .v{font:500 1.25rem var(--mono);font-variant-numeric:tabular-nums}
+.stat .l{font-size:.78rem;color:var(--ink-2)}
+.next{background:var(--accent-soft);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 6px 6px 0}
+.next p:last-child{margin:0}
+.formula{font:500 .95rem var(--mono);background:var(--bg);border:1px solid var(--rule);border-radius:6px;padding:10px 14px;overflow-x:auto}
+.confirm{background:var(--warn-soft);color:var(--warn);font:500 .74rem var(--mono);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.chart{position:relative;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto;min-width:520px}
+.chart text{fill:var(--ink-2);font:12px var(--mono)}
+.legend{display:flex;gap:16px;font:.8rem var(--mono);color:var(--ink-2);margin-bottom:4px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:var(--c);vertical-align:-1px}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font:.75rem/1.4 var(--mono);padding:6px 8px;border-radius:4px;opacity:0;transition:opacity .1s;white-space:nowrap}
+.cap{font-size:.82rem;color:var(--ink-2);margin-top:6px;max-width:72ch}
+table{border-collapse:collapse;font:.85rem var(--mono);font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--rule);padding:6px 12px 6px 0;text-align:left}
+th{color:var(--ink-2);font-weight:500}
+.tw{overflow-x:auto}
+.pcb{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
+.pcb img{max-width:100%;border-radius:6px;border:1px solid var(--rule)}
+footer{margin-top:40px;font-size:.85rem;color:var(--ink-2)}
+@media (max-width:760px){.trav{grid-template-columns:1fr}.rail{border-right:0;border-bottom:1px solid var(--rule);grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}.pcb{grid-template-columns:1fr}h1{font-size:1.9rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="meta"><span>PROCESS ENGINEERING PORTFOLIO</span><span>REV A · OCT 2026</span></div>
+  <h1>Melodie Peng</h1>
+  <p class="sub">Sophomore in Electrical and Computer Engineering at USC Viterbi (Class of 2029). Hands-on cleanroom work in PECVD deposition, DWL lithography and thin-film metrology at the USC Nanofab, plus microfabrication, flip-chip assembly and reliability testing for an implantable neural device at a stealth-mode startup.</p>
+  <div class="meta"><span>mjpeng@usc.edu</span><a href="https://www.linkedin.com/in/melodie-peng">linkedin.com/in/melodie-peng</a><span>Los Angeles, CA</span></div>
+</header>
+
+<section class="tools" aria-label="Tools and techniques">
+  <div><h3>Deposition &amp; patterning</h3><ul><li>PECVD (SiO₂), following process travelers</li><li>DWL lithography, spin coating</li><li>HMDS priming, O₂ plasma ashing</li></ul></div>
+  <div><h3>Metrology &amp; test</h3><ul><li>Thin-film metrology: Filmetrics, Dektak</li><li>EIS (electrochemical impedance spectroscopy)</li></ul></div>
+  <div><h3>Assembly</h3><ul><li>Reflow / flip-chip assembly</li><li>Soldering</li></ul></div>
+  <div><h3>Electronics &amp; code</h3><ul><li>KiCad</li><li>C, C++; SPI, UART, I2C</li></ul></div>
+</section>
+
+<!-- 01 PECVD -->
+<article class="trav" id="pecvd">
+  <aside class="rail">
+    <div class="lot">01 · PECVD</div>
+    <div><b>Where</b>USC John O'Brien Nanofab</div>
+    <div><b>Role</b>Cleanroom Student Assistant</div>
+    <div><b>Tools</b>Oxford PECVD, Filmetrics, Dektak</div>
+    <div><b>Film</b>SiO₂ on p-Si coupons, 300 nm target</div>
+    <div><b>Log</b>33 measured SiO₂ runs, Jul 2025 to Jul 2026</div>
+    <div><b>When</b>Summer 2026</div>
+  </aside>
+  <div class="body">
+    <div><h2>PECVD calibration and deposition-rate drift analysis</h2></div>
+    <div>
+      <h3>What I did</h3>
+      <p>I deposited SiO₂ films to a 300 nm target following the lab's full PECVD traveler: cleave p-type Si into 10 × 10 mm coupons, solvent clean (acetone, IPA, N₂), run a 20-minute chamber clean, deposit, then verify thickness and uniformity with Filmetrics and Dektak. My Summer 2026 runs came in at 0.84 to 0.88 nm/s, and I logged each one in the lab's calibration log and NEMO records so other users could plan accurate depositions.</p>
+      <p>I then went back through the full shared log and treated it as a process-control dataset: one rate per run (thickness ÷ deposition time ), plotted against date and recipe.</p>
+    </div>
+    <div>
+      <div class="legend"><span style="--c:var(--s2)">SiO₂ · "translated" recipe</span><span style="--c:var(--s1)">SiO₂ · Standard recipe</span></div>
+      <div class="chart" id="c-sio2"></div>
+      <p class="cap">SiO₂ deposition rate per run from F20 thickness. Dashed lines are each recipe's mean. Hover a point for the run.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">0.680 ± 0.022</div><div class="l">nm/s, translated recipe (n = 8)</div></div>
+      <div class="stat"><div class="v">0.855 ± 0.019</div><div class="l">nm/s, Standard recipe (n = 25)</div></div>
+    </div>
+    <div>
+      <h3>Findings</h3>
+      <ol class="findings">
+        <li><span>The SiO₂ rate jumped 26%, from 0.680 to 0.855 nm/s, in late January 2026. The jump lines up exactly with the switch from the "translated" recipe to the Standard recipe, so it is a recipe change rather than slow tool drift. Within the Standard recipe the rate holds to 2.2% (1σ) over five months.</span></li>
+        <li><span>The time calculator lagged the tool. It still assumed 0.82 nm/s, so 365 s runs came out at 315.7 nm on average, 5.2% over target (n = 11). Once the time was cut to 345 s, five runs averaged 296.0 nm, 1.3% under.</span></li>
+        <li><span>The log had data-integrity bugs. From June 2026, ellipsometer thicknesses were entered in Å in a column labeled nm (3,524 entered where 352.4 nm was meant), so any formula reading them is off by 10×. The "ellipsometer" SiO₂ rate column actually pulls from the F20 cells, so it silently repeats the F20 numbers. Sample IDs S39 to S51 were also reused for different runs.</span></li>
+      </ol>
+    </div>
+    <div class="tw">
+      <h3>F20 vs. ellipsometer agreement</h3>
+      <table>
+        <tr><th>Film</th><th>n</th><th>405 nm</th><th>633 nm</th><th>830 nm</th></tr>
+        <tr><td>SiO₂</td><td>17</td><td>27.8</td><td>24.2</td><td>50.4</td></tr>
+      </table>
+      <p class="cap">Mean |ellipsometer − F20| in nm across SiO₂ runs, after converting the Å entries. The 830 nm channel disagrees most, so 633 nm is the better cross-check for oxide.</p>
+    </div>
+    <div class="next"><h3>Next experiment</h3><p>The recipe sheet lists 0.87 nm/s on 10 mm coupons but 0.826 nm/s on 3-inch wafers, about 5% lower. I'd map thickness across a full 3-inch wafer with the Dektak to see whether that gap is edge-to-center nonuniformity, then set deposition time by substrate size. On the sheet side: put units in every header, add a validation rule that rejects thickness entries above 1000, and make lot IDs unique.</p></div>
+  </div>
+</article>
+
+<!-- 02 Litho -->
+<article class="trav" id="litho">
+  <aside class="rail">
+    <div class="lot">02 · LITHO</div>
+    <div><b>Where</b>USC John O'Brien Nanofab</div>
+    <div><b>Tool</b>Direct-write laser lithography (maskless)</div>
+    <div><b>Resist</b>AZ1512, AZ1518</div>
+    <div><b>Substrates</b>Si, SiO₂ on Si</div>
+    <div><b>With</b>Process supervisor</div>
+  </aside>
+  <div class="body">
+    <div><h2>Exposure dose matrix and overlay alignment</h2></div>
+    <div>
+      <h3>Dose test</h3>
+      <p>Set up an exposure job by entering substrate type and size, die size, and the row and column count. On test coupons I ran a series/matrix job so each die received a different laser power, developed, and read off which die resolved cleanly. That set 66 mW for Layer 1.</p>
+      <p>The first Layer 1 exposure on an SiO₂ coupon failed, so I went back and ran dose tests on SiO₂ itself with both AZ1512 and AZ1518 before exposing real samples. The next real sample passed at 66 mW.</p>
+    </div>
+    <div class="tw">
+      <table>
+        <tr><th>Sample</th><th>Substrate</th><th>Resist</th><th>Job</th><th>Power</th><th>Pass</th></tr>
+        <tr><td>1</td><td>Si</td><td>AZ1512</td><td>Dose test</td><td>matrix</td><td>Y</td></tr>
+        <tr><td>2</td><td>SiO₂/Si</td><td>AZ1512</td><td>Layer 1</td><td>66 mW</td><td>N</td></tr>
+        <tr><td>M1</td><td>SiO₂/Si</td><td>AZ1512</td><td>Dose test</td><td>matrix</td><td>Y</td></tr>
+        <tr><td>M2</td><td>SiO₂/Si</td><td>AZ1518</td><td>Dose test</td><td>matrix</td><td>Y</td></tr>
+        <tr><td>Real 1</td><td>device</td><td>AZ1512</td><td>Layer 1</td><td>66 mW</td><td>Y</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Overlay alignment</h3>
+      <p>Located existing alignment marks at the pattern corners with the tool camera, entered their design coordinates, then clicked the same four points on the real substrate. The tool fits a shift and rotation between the two point sets and corrects the whole exposure to match the sample.</p>
+      <p>Tool habits I learned: plastic tweezers only, vacuum-hold the substrate, and set the z-limit just above substrate thickness, since it caps how far the write head travels and a wrong value crashes the head into the wafer.</p>
+    </div>
+    <div class="next"><h3>Next experiment</h3><p>Add a focus axis to the dose matrix (dose × focus) and measure critical dimension per die on a profilometer or SEM instead of a pass/fail read, so the process window has numbers on both sides.</p></div>
+  </div>
+</article>
+
+<!-- 03 Reflow -->
+<article class="trav" id="reflow">
+  <aside class="rail">
+    <div class="lot">03 · ASSEMBLY</div>
+    <div><b>Where</b>Stealth-mode neurotech startup</div>
+    <div><b>Parts</b>Omnetics connector and flip-chip electrode array on interposer boards</div>
+    <div><b>Unit</b>1 connector on 1 board</div>
+    <div><b>Result</b>~80% → ~99% yield</div>
+  </aside>
+  <div class="body">
+    <div><h2>Reflow DOE for connector and flip-chip attachment</h2></div>
+    <div>
+      <p>Solder bridging between fine-pitch pads was the main failure when attaching an Omnetics connector and a flip-chip electrode array to small interposer boards. I ran a design of experiments to eliminate it. Each experimental unit was one connector on one board, scored pass or fail, and I changed one factor at a time against a fixed baseline, which took connector yield from about 80% to 99%.</p>
+    </div>
+    <div class="tw">
+      <table>
+        <tr><th>Factor</th><th>What it controls</th></tr>
+        <tr><td>Reflow temperature</td><td>Peak joint temperature</td></tr>
+        <tr><td>Tinning</td><td>How much solder sits on each pad before reflow</td></tr>
+        <tr><td>Flux volume</td><td>Wetting vs. residue and bridging</td></tr>
+        <tr><td>Bake time</td><td>Time at temperature</td></tr>
+      </table>
+      <p class="cap">Factor levels and the final recipe are proprietary and left out.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">~80%</div><div class="l">assembly yield at baseline</div></div>
+      <div class="stat"><div class="v">~99%</div><div class="l">assembly yield on the final recipe</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">factors varied one at a time</div></div>
+    </div>
+    <div class="next"><h3>Next experiment</h3><p>One-factor-at-a-time misses interactions, such as flux amount mattering more at lower temperature. A 2<sup>4−1</sup> fractional factorial covers all four factors in 8 runs and separates main effects from two-way interactions. I'd also score each pin rather than each connector, which turns one pass/fail into dozens of data points per board.</p></div>
+  </div>
+</article>
+
+<!-- 04 Soak -->
+<article class="trav" id="soak">
+  <aside class="rail">
+    <div class="lot">04 · RELIABILITY</div>
+    <div><b>Where</b>Stealth-mode neurotech startup</div>
+    <div><b>Device</b>Polymer microelectrode arrays, 2 designs</div>
+    <div><b>Medium</b>PBS (phosphate-buffered saline)</div>
+    <div><b>Duration</b>43 days, 12 timepoints</div>
+  </aside>
+  <div class="body">
+    <div><h2>Accelerated soak testing of electrode arrays</h2></div>
+    <div>
+      <h3>Method</h3>
+      <p>Arrays from two designs were held in PBS, which mimics the salt content of body fluid, at elevated temperature to speed up aging. I tracked impedance magnitude and phase with EIS at log-spaced intervals: 4 hours, then days 1, 4, 6, 11, 12, 18, 25, 32, 36 and 43, with more points early when changes are fastest. An electrode fails when its impedance falls below 50% of its starting value: a drop means saline has found a leakage path through the insulation.</p>
+    </div>
+    <div class="formula">AF = 2^((T_soak − 37 °C) / 10)  ·  equivalent days at 37 °C = soak days × AF</div>
+    <p class="cap" style="margin-top:-8px">Each 10 °C above body temperature roughly doubles the rate of the reactions that degrade the insulation (the Q10 = 2 convention used in ASTM F1980). So a soak 20 °C above body temperature ages the arrays about 4× faster.</p>
+    <div>
+      <div class="legend"><span style="--c:var(--s1)">Impedance, % of day 0</span></div>
+      <div class="chart" id="c-soak"></div>
+      <p class="cap">One representative array, impedance magnitude at a single EIS test frequency, normalized to day 0; absolute values withheld. Dashed line is the 50% failure threshold.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">±25%</div><div class="l">band held through day 25</div></div>
+      <div class="stat"><div class="v">≈ day 38</div><div class="l">crossed failure line (interpolated)</div></div>
+      <div class="stat"><div class="v">~80 days</div><div class="l">real-time-equivalent stability, vs. a 3-month target</div></div>
+    </div>
+    <div class="next"><h3>Next experiment</h3><p>Run the same arrays at two or three soak temperatures. The failure time at each temperature lets you fit the acceleration factor directly instead of assuming Q10 = 2. Cross-section failed arrays to tell delamination from water uptake through the insulation.</p></div>
+  </div>
+</article>
+
+<!-- 05 PCB -->
+<article class="trav" id="pcb">
+  <aside class="rail">
+    <div class="lot">05 · ELECTRONICS</div>
+    <div><b>Where</b>USC ASPEN Lab, PCB competition</div>
+    <div><b>Tool</b>KiCad</div>
+    <div><b>Board</b>2-layer, through-hole + SOIC</div>
+  </aside>
+  <div class="body">
+    <div><h2>Single Langmuir probe sweep and current-sense board</h2></div>
+    <div class="pcb">
+      <div>
+        <p>A plasma diagnostic board. A function-generator input drives an OPA454 high-voltage op-amp stage that sweeps the probe bias. Probe current flows through a 100 Ω shunt, and an INA149 high-common-mode difference amplifier reads the voltage across it for the DAQ. ±12 V rails come from Zener regulators (1N4742A) with local decoupling.</p>
+        <p>Two design problems: I kept the OPA454 inside its 50 mA output limit by scaling the feedback divider up 1000× and adding thermal vias for about 2 W of dissipation. The INA149 lets the DAQ read probe current at about 35 V common mode, well outside the DAQ's ±10.4 V input range.</p>
+        <p>It ties back to process work: plasma density and electron temperature are what set deposition and etch behavior in tools like the PECVD above.</p>
+      </div>
+      <img src="pcb-render.png" alt="3D render of the Langmuir probe PCB with screw terminals, OPA454 and INA149">
+    </div>
+  </div>
+</article>
+
+<footer>PECVD charts use every run in the USC Nanofab calibration log with a measured thickness. Data from the startup is normalized or described without values to protect confidential process information.</footer>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const D={"sio2":[{"d":"2025-07-23","s":"S1","r":0.647,"th":236.0,"t":365.0,"std":false},{"d":"2025-07-29","s":"S2","r":0.652,"th":238.0,"t":365.0,"std":false},{"d":"2025-07-29","s":"S3","r":0.69,"th":252.0,"t":365.0,"std":false},{"d":"2025-08-05","s":"S4","r":0.696,"th":254.0,"t":365.0,"std":false},{"d":"2026-01-21","s":"S12","r":0.668,"th":244.0,"t":365.0,"std":false},{"d":"2026-01-24","s":"S13","r":0.682,"th":249.0,"t":365.0,"std":false},{"d":"2026-01-25","s":"S15","r":0.699,"th":255.0,"t":365.0,"std":false},{"d":"2026-01-26","s":"S16","r":0.704,"th":257.0,"t":365.0,"std":false},{"d":"2026-01-29","s":"S19","r":0.827,"th":311.0,"t":376.0,"std":true},{"d":"2026-01-30","s":"S20","r":0.846,"th":318.0,"t":376.0,"std":true},{"d":"2026-02-28","s":"S22","r":0.822,"th":309.0,"t":376.0,"std":true},{"d":"2026-02-28","s":"S23","r":0.84,"th":316.0,"t":376.0,"std":true},{"d":"2026-03-07","s":"S27","r":0.822,"th":309.0,"t":376.0,"std":true},{"d":"2026-03-07","s":"S28","r":0.856,"th":322.0,"t":376.0,"std":true},{"d":"2026-03-21","s":"S30","r":0.862,"th":324.0,"t":376.0,"std":true},{"d":"2026-03-21","s":"S31","r":0.872,"th":328.0,"t":376.0,"std":true},{"d":"2026-03-21","s":"S32","r":0.832,"th":313.0,"t":376.0,"std":true},{"d":"2026-03-28","s":"S34","r":0.874,"th":319.0,"t":365.0,"std":true},{"d":"2026-03-28","s":"S35","r":0.871,"th":318.0,"t":365.0,"std":true},{"d":"2026-04-04","s":"S37","r":0.849,"th":310.0,"t":365.0,"std":true},{"d":"2026-04-04","s":"S38","r":0.866,"th":316.0,"t":365.0,"std":true},{"d":"2026-04-11","s":"S40","r":0.844,"th":308.0,"t":365.0,"std":true},{"d":"2026-04-18","s":"S42","r":0.855,"th":312.0,"t":365.0,"std":true},{"d":"2026-04-18","s":"S43","r":0.866,"th":316.0,"t":365.0,"std":true},{"d":"2026-04-25","s":"S45","r":0.858,"th":313.0,"t":365.0,"std":true},{"d":"2026-04-30","s":"S48","r":0.86,"th":314.0,"t":365.0,"std":true},{"d":"2026-05-09","s":"S50","r":0.879,"th":321.0,"t":365.0,"std":true},{"d":"2026-05-09","s":"S51","r":0.893,"th":326.0,"t":365.0,"std":true},{"d":"2026-06-08","s":"S55","r":0.835,"th":288.0,"t":345.0,"std":true},{"d":"2026-06-10","s":"S56","r":0.87,"th":300.0,"t":345.0,"std":true},{"d":"2026-06-18","s":"S48","r":0.87,"th":300.0,"t":345.0,"std":true},{"d":"2026-07-02","s":"S50","r":0.875,"th":302.0,"t":345.0,"std":true},{"d":"2026-07-13","s":"S51","r":0.841,"th":290.0,"t":345.0,"std":true}],"sin":[{"d":"2025-12-15","s":"S10","r":4.64,"th":297.0,"c":64.0},{"d":"2026-01-24","s":"S14","r":3.58,"th":229.0,"c":64.0},{"d":"2026-02-26","s":"S21","r":3.83,"th":245.0,"c":64.0},{"d":"2026-03-03","s":"S24","r":5.0,"th":370.0,"c":74.0},{"d":"2026-03-03","s":"S25","r":4.92,"th":315.0,"c":64.0},{"d":"2026-03-03","s":"S26","r":4.36,"th":279.0,"c":64.0},{"d":"2026-03-12","s":"S29","r":4.66,"th":298.0,"c":64.0},{"d":"2026-03-28","s":"S33","r":4.55,"th":291.0,"c":64.0},{"d":"2026-04-04","s":"S36","r":3.86,"th":286.0,"c":74.0},{"d":"2026-04-11","s":"S39","r":4.62,"th":342.0,"c":74.0},{"d":"2026-04-18","s":"S41","r":3.96,"th":293.0,"c":74.0},{"d":"2026-04-25","s":"S44","r":4.23,"th":448.0,"c":106.0},{"d":"2026-04-30","s":"S47","r":4.1,"th":435.0,"c":106.0},{"d":"2026-05-09","s":"S49","r":3.91,"th":250.0,"c":64.0},{"d":"2026-05-21","s":"S53","r":3.69,"th":236.0,"c":64.0},{"d":"2026-05-28","s":"S54","r":3.69,"th":236.0,"c":64.0},{"d":"2026-06-11","s":"S39","r":4.16,"th":287.0,"c":69.0},{"d":"2026-06-11","s":"S40","r":4.2,"th":269.0,"c":64.0},{"d":"2026-06-12","s":"S41","r":4.09,"th":262.0,"c":64.0},{"d":"2026-06-15","s":"S43","r":5.08,"th":325.0,"c":64.0},{"d":"2026-06-16","s":"S44","r":4.06,"th":260.0,"c":64.0},{"d":"2026-06-16","s":"S45","r":4.01,"th":277.0,"c":69.0},{"d":"2026-06-16","s":"S46","r":3.94,"th":272.0,"c":69.0},{"d":"2026-06-18","s":"S47","r":4.01,"th":301.0,"c":75.0}]};
+const soak=[[0,1200],[0.17,1000],[1,1200],[4,1300],[6,1500],[11,1300],[12,1300],[18,1200],[25,1300],[32,1100],[36,790],[43,190]].map(([d,z])=>({x:d,y:Math.round(z/1200*100)}));
+const tip=document.getElementById('tip');
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function chart(id,{pts,xType,xDom,yDom,yTicks,yFmt,xTicks,xFmt,refs=[],band,yLabel}){
+  const W=820,H=300,m={l:58,r:20,t:14,b:36};
+  const host=document.getElementById(id);
+  const s=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':yLabel});host.appendChild(s);
+  const X=v=>m.l+(v-xDom[0])/(xDom[1]-xDom[0])*(W-m.l-m.r);
+  const Y=v=>H-m.b-(v-yDom[0])/(yDom[1]-yDom[0])*(H-m.t-m.b);
+  yTicks.forEach(t=>{el('line',{x1:m.l,x2:W-m.r,y1:Y(t),y2:Y(t),stroke:'var(--rule)','stroke-width':1},s);const tx=el('text',{x:m.l-8,y:Y(t)+4,'text-anchor':'end'},s);tx.textContent=yFmt(t)});
+  xTicks.forEach(t=>{const tx=el('text',{x:X(t),y:H-m.b+20,'text-anchor':'middle'},s);tx.textContent=xFmt(t)});
+  const yl=el('text',{x:14,y:m.t+ (H-m.t-m.b)/2,'text-anchor':'middle',transform:`rotate(-90 14 ${m.t+(H-m.t-m.b)/2})`},s);yl.textContent=yLabel;
+  if(band)el('rect',{x:m.l,width:W-m.l-m.r,y:Y(band[1]),height:Y(band[0])-Y(band[1]),fill:'var(--s2)',opacity:.12},s);
+  refs.forEach(r=>{el('line',{x1:X(r.x0??xDom[0]),x2:X(r.x1??xDom[1]),y1:Y(r.y),y2:Y(r.y),stroke:r.c,'stroke-width':1.5,'stroke-dasharray':'5 4'},s);if(r.label){const left=r.at==='left',bef=r.at==='before';const t=el('text',{x:bef?X(r.x0)-8:left?X(r.x0??xDom[0])+4:X(r.x1??xDom[1])-4,y:bef?Y(r.y)+4:Y(r.y)+(r.below?16:-6),'text-anchor':left?'start':'end'},s);t.textContent=r.label}});
+  if(xType==='line'){el('polyline',{points:pts.map(p=>X(p.x)+','+Y(p.y)).join(' '),fill:'none',stroke:'var(--s1)','stroke-width':2},s)}
+  pts.forEach(p=>{
+    el('circle',{cx:X(p.x),cy:Y(p.y),r:5,fill:p.c||'var(--s1)',stroke:'var(--paper)','stroke-width':2},s);
+    const hit=el('circle',{cx:X(p.x),cy:Y(p.y),r:12,fill:'transparent',tabindex:0},s);
+    const show=()=>{tip.innerHTML=p.tip;tip.style.opacity=1;const b=hit.getBoundingClientRect();tip.style.left=(b.left+window.scrollX+16)+'px';tip.style.top=(b.top+window.scrollY-8)+'px'};
+    hit.addEventListener('mouseenter',show);hit.addEventListener('focus',show);
+    hit.addEventListener('mouseleave',()=>tip.style.opacity=0);hit.addEventListener('blur',()=>tip.style.opacity=0);
+  });
+}
+const t0=Date.parse('2025-07-01'),day=864e5,dx=d=>(Date.parse(d)-t0)/day;
+const mon=['Jul 25','Sep 25','Nov 25','Jan 26','Mar 26','May 26','Jul 26'];
+const monX=['2025-07-01','2025-09-01','2025-11-01','2026-01-01','2026-03-01','2026-05-01','2026-07-01'].map(dx);
+const lastStdX=dx('2026-07-20');
+chart('c-sio2',{pts:D.sio2.map(r=>({x:dx(r.d),y:r.r,c:r.std?'var(--s1)':'var(--s2)',tip:`${r.s} · ${r.d}<br>${r.th} nm in ${r.t} s<br>${r.r.toFixed(3)} nm/s`})),
+  xDom:[0,dx('2026-07-20')],yDom:[0.6,0.92],yTicks:[0.6,0.7,0.8,0.9],yFmt:v=>v.toFixed(1),xTicks:monX,xFmt:v=>mon[monX.indexOf(v)],
+  refs:[{y:0.680,c:'var(--s2)',x0:0,x1:dx('2026-01-27'),label:'mean 0.680',at:'left',below:true},{y:0.855,c:'var(--s1)',x0:dx('2026-01-29'),label:'mean 0.855',at:'before'}],yLabel:'nm / s'});
+chart('c-soak',{pts:soak.map(p=>({x:p.x,y:p.y,tip:`Day ${p.x}<br>${p.y}% of day 0`})),xType:'line',
+  xDom:[0,44],yDom:[0,140],yTicks:[0,25,50,75,100,125],yFmt:v=>v+'%',xTicks:[0,6,12,18,25,32,38,43],xFmt:v=>'d'+v,
+  refs:[{y:50,c:'var(--warn)',label:'failure: 50% of initial',at:'left',below:true}],yLabel:'% of day-0 impedance'});
+</script>
+</body>
+</html>
